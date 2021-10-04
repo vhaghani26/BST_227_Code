@@ -10,6 +10,13 @@
 
 import argparse
 
+# Setup
+parser = argparse.ArgumentParser(
+	description='Implements maximum likelihood estimation given sequence data')
+
 # Required arguments
 parser.add_argument('--file', required=True, type=str,
 	metavar='<path>', help='Text file containing the DNA sequences')
+
+# Finalization 
+arg = parser.parse_args()
