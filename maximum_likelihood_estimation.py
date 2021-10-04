@@ -6,7 +6,7 @@
 # Assume the text file input is going to be a set of N sequences (one per line, all of the same length, with the characters A, C, G, and T)
 
 ## Usage
-# python3 maximum_likelihood_estimation --file sample_data_mle.txt
+# python3 maximum_likelihood_estimation.py --file sample_data_mle.txt
 
 import argparse
 
@@ -20,3 +20,10 @@ parser.add_argument('--file', required=True, type=str,
 
 # Finalization 
 arg = parser.parse_args()
+
+# Read in text file containing sequences
+with open('sample_data_mle.txt', 'r') as f:
+    lines = f.readlines()
+    print(lines)
+
+
