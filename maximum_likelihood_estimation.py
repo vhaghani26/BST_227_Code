@@ -26,7 +26,8 @@ seqs = []
 with open(arg.file, 'r') as a_file:
     for line in a_file:
         if not line.lstrip().startswith('#'):
-            seqs.append(line[:-1])
+            new_line = line.upper()
+            seqs.append(new_line[:-1])
     print(seqs)
            
 # In X_{ijk}
@@ -34,5 +35,15 @@ with open(arg.file, 'r') as a_file:
 # j is the index of the sequence (first position of the ith sequence)
 # k is the assigned value of the base pair at the jth position in the ith sequence
 for seq in seqs:
-    for i in enumerate(seq):
-        print(i)
+    for i, v in enumerate(seq):
+        if v == 'A':
+            print(v, 'This is an A')
+        elif v == 'C':
+            print(v, 'This is a C')
+        elif v == 'G':
+            print(v, 'This is a G')
+        elif v == 'T':
+            print(v, 'This is a T')
+        else:
+            print('Unknown base pair in sequence. Please ensure that only A, C, G, or T are present')
+        print(i, v)
