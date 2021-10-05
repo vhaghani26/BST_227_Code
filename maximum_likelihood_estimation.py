@@ -28,14 +28,11 @@ with open(arg.file, 'r') as a_file:
         if not line.lstrip().startswith('#'):
             seqs.append(line[:-1])
     print(seqs)
-
-# Make a dictionary containing the base pair and corresponding numeric value
-bp_vals = {'A': 1, 'a': 1,
-           'C': 2, 'c': 2,
-           'G': 3, 'g': 3,
-           'T': 4, 't': 4}
            
 # In X_{ijk}
 # i is the sequence number (sequence 1, 2, ..., n) 
 # j is the index of the sequence (first position of the ith sequence)
 # k is the assigned value of the base pair at the jth position in the ith sequence
+for seq in seqs:
+    for i in enumerate(seq):
+        print(i)
