@@ -1,5 +1,3 @@
 GCAGG
-AGGGC
+agggc
 CGTCT
-ACGAT
-GCGGC
