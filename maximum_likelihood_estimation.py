@@ -13,7 +13,7 @@
 # python3 maximum_likelihood_estimation.py --file sample_data_mle.txt
 
 import argparse
-#import numpy as np
+import numpy as np
 
 # Setup
 parser = argparse.ArgumentParser(
@@ -27,39 +27,37 @@ parser.add_argument('--file', required=True, type=str,
 arg = parser.parse_args()
 
 # Read in text file containing sequences and add each sequence to a list
-seqs = []
+my_seqs = []
 with open(arg.file, 'r') as a_file:
     for line in a_file:
         if not line.lstrip().startswith('#'):
             new_line = line.upper()
-            seqs.append(new_line[:-1])
-    print(seqs)
-           
-# Write a function to generate the matrix
-#def make_matrix(seqs):
-example_list = [1, 2, 3, 4]
-def sample_function(sample_list):
-    for i in sample_list:
-        print(i)
+            my_seqs.append(new_line[:-1])
+    print(my_seqs)
 
-sample_function(example_list)
+# Make a one-hot encoded 3D matrix X_{ijk} 
+def make_matrix(seqs):
+    # Determine how many input sequences we have
+    num_seqs = len(seqs)
+    # Determine the length of each sequence
+    # Based on instructions, all sequences are equal length
+    # Therefore, we can assume the length of the first sequence is equal to the length of each sequence
+    seq_length = len(seqs[0])
+    matrix = np.zeros((num_seqs, seq_length, 4), dtype = int)
+    for i, seq in enumerate(seqs):
+        for j in range(seq_length):
+            if seq[j] == 'A':
+                matrix[i][j] = [1, 0, 0, 0]
+            elif seq[j] == 'C':
+                matrix[i][j] = [0, 1, 0, 0]
+            elif seq[j] == 'G':
+                matrix[i][j] = [0, 0, 1, 0]
+            elif seq[j] == 'T':
+                matrix[i][j] = [0, 0, 0, 1]
+            else:
+                print('Unknown base pair in sequence. Please ensure that only A, C, G, or T are present')
+    return matrix
 
-
-'''
-for seq in seqs:
-    for i, v in enumerate(seq):
-        if v == 'A':
-            print(v, 'This is an A')
-        elif v == 'C':
-            print(v, 'This is a C')
-        elif v == 'G':
-            print(v, 'This is a G')
-        elif v == 'T':
-            print(v, 'This is a T')
-        else:
-            print('Unknown base pair in sequence. Please ensure that only A, C, G, or T are present')
-        print(i, v)
-'''
-
-
-# Write a function to do the Boolean part
+# Implement function
+my_matrix = make_matrix(my_seqs)
+print(my_matrix)
