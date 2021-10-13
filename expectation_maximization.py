@@ -26,6 +26,8 @@ with open(arg.file, 'r') as a_file:
 
 # Initialize the parameters randomly for theta0
 
+np.random.seed(0)
+
 # Generate lambdas that are dependent on each other and sum to 1
 def initialize_lambdas():
     lambda0 = np.random.random_sample()
