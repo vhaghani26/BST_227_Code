@@ -52,14 +52,15 @@ print(initialize_random_params())
 
 ##########################################
 
+# Set convergence criterion L_t = 1e -4 (or some other number)
+L_t = 1e-4
+# Set t = 1
+t = 1
+
 
 def e_step():
-    # Set convergence criterion L_t = 1e -4 (or some other number)
-    L_t = 1e-4
-    # Set t = 1
-    t = 1
-    return L_t
-
+    return 1
+    
 # Implement function
 print(e_step())
 
@@ -67,7 +68,13 @@ print(e_step())
 
 
 
+def m_step():
+    return 1
+    
+def run_em():
+    return 1
+
+
 # Set L^(-1) = -(infinity)
 # Set L^(0) = 0
-# While L(^(t-1) - L^(t-2) > L_t
-## For the current iteration t, compute posteriors based on the previous best estimate of the parameters theta^(t-1) by computing 
+# While L(^(t-1) - L^(t-2) > L_t, for the current iteration t, compute posteriors based on the previous best estimate of the parameters theta^(t-1) by computing 
