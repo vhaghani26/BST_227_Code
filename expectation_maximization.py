@@ -24,21 +24,36 @@ with open(arg.file, 'r') as a_file:
             new_line = line.upper()
             my_seqs.append(new_line[:-1])
 
-##########################################
-
 # Initialize the parameters randomly for theta0
+
+# Generate lambdas that are dependent on each other and sum to 1
 def initialize_lambdas():
     lambda0 = np.random.random_sample()
     lambda1 = 1 - lambda0
     return lambda0, lambda1
 
+# Generate the lambdas using the previous function
+# Generate the psis that correspond to the frequencies for ['A', 'C', 'G', 'T'], where bp frequencies sum to 1 in each array
+# Store all initialized parameters in a dictionary called 'params'
 def initialize_random_params():
+    lambdas = initialize_lambdas()
     params = {'psi0': np.random.dirichlet(np.ones(4),size=1),
               'psi1': np.random.dirichlet(np.ones(4),size=1),
-              'lambda0': initialize_lambdas()[0],
-              'lambda1': initialize_lambdas()[1]
+              'lambda0': lambdas[0],
+              'lambda1': lambdas[1]
               }
     return params
 
-my_dict = initialize_random_params()
-print(my_dict)
+my_params = initialize_random_params()
+print(my_params)
+
+
+##########################################
+
+
+# Set L^(-1) = -(infinity)
+# Set L^(0) = 0
+# Set convergence criterion L_t = 1e -4 (or some other number)
+# Set t = 1
+# While L(^(t-1) - L^(t-2) > L_t
+## For the current iteration t, compute posteriors based on the previous best estimate of the parameters theta^(t-1) by computing 
