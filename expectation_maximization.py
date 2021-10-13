@@ -25,7 +25,7 @@ with open(arg.file, 'r') as a_file:
             my_seqs.append(new_line[:-1])
 
 # Initialize the parameters randomly for theta0
-
+# Set a random seed for troubleshooting/consistency in outputs
 np.random.seed(0)
 
 # Generate lambdas that are dependent on each other and sum to 1
@@ -46,16 +46,28 @@ def initialize_random_params():
               }
     return params
 
-my_params = initialize_random_params()
-print(my_params)
+# Implement function
+print(initialize_random_params())
 
 
 ##########################################
 
 
+def e_step():
+    # Set convergence criterion L_t = 1e -4 (or some other number)
+    L_t = 1e-4
+    # Set t = 1
+    t = 1
+    return L_t
+
+# Implement function
+print(e_step())
+
+
+
+
+
 # Set L^(-1) = -(infinity)
 # Set L^(0) = 0
-# Set convergence criterion L_t = 1e -4 (or some other number)
-# Set t = 1
 # While L(^(t-1) - L^(t-2) > L_t
 ## For the current iteration t, compute posteriors based on the previous best estimate of the parameters theta^(t-1) by computing 
