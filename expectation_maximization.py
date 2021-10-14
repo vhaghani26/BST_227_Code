@@ -96,6 +96,7 @@ my_posterior = compute_posterior(my_params)
 print(f'My posterior probabilities are {my_posterior}')
 
 ##########################################
+# Everything below this^ line is still being worked on
 
 def e_step():
     # t is the number of steps
