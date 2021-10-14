@@ -23,6 +23,32 @@ with open(arg.file, 'r') as a_file:
         if not line.lstrip().startswith('#'):
             new_line = line.upper()
             my_seqs.append(new_line[:-1])
+            
+# Make a one-hot encoded 3D matrix X_{ijk} 
+def make_matrix(seqs):
+    # Determine how many input sequences we have
+    num_seqs = len(seqs)
+    # Determine the length of each sequence
+    # Based on instructions, all sequences are equal length
+    # Therefore, we can assume the length of the first sequence is equal to the length of each sequence
+    seq_length = len(seqs[0])
+    matrix = np.zeros((num_seqs, seq_length, 4), dtype = int)
+    for i, seq in enumerate(seqs):
+        for j in range(seq_length):
+            if seq[j] == 'A':
+                matrix[i][j] = [1, 0, 0, 0]
+            elif seq[j] == 'C':
+                matrix[i][j] = [0, 1, 0, 0]
+            elif seq[j] == 'G':
+                matrix[i][j] = [0, 0, 1, 0]
+            elif seq[j] == 'T':
+                matrix[i][j] = [0, 0, 0, 1]
+            else:
+                print('Unknown base pair in sequence. Please ensure that only A, C, G, or T are present')
+    return matrix
+
+# Implement function
+my_matrix = make_matrix(my_seqs)
 
 # Initialize the parameters randomly for theta0
 # Set a random seed for troubleshooting/consistency in outputs
