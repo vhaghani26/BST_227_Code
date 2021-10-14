@@ -47,8 +47,9 @@ def make_matrix(seqs):
                 print('Unknown base pair in sequence. Please ensure that only A, C, G, or T are present')
     return matrix
 
-# Implement function
+# Implement function to ensure that it works as intended
 my_matrix = make_matrix(my_seqs)
+print(my_matrix)
 
 # Initialize the parameters randomly for theta0
 # Set a random seed for troubleshooting/consistency in outputs
@@ -65,19 +66,38 @@ def initialize_lambdas():
 # Store all initialized parameters in a dictionary called 'params'
 def initialize_random_params():
     lambdas = initialize_lambdas()
-    params = {'psi0': np.random.dirichlet(np.ones(4),size=1),
-              'psi1': np.random.dirichlet(np.ones(4),size=1),
+    params = {'psi0': (np.random.dirichlet(np.ones(4),size=1)).tolist(),
+              'psi1': (np.random.dirichlet(np.ones(4),size=1)).tolist(),
               'lambda0': lambdas[0],
               'lambda1': lambdas[1]
               }
     return params
 
-# Implement function
-print(initialize_random_params())
+# Implement function to ensure that it works as intended
+my_theta = initialize_random_params()
+print(f'My initialized parameters are {my_theta}')
 
+def compute_posterior(theta):
+    posterior_probabilities = []
+    # Range corresponds to base pair identity, which translates to specific indices of psi
+    for i in range(0,4):
+        posterior = (theta['lambda1']*theta['psi1'][0][i])/((theta['lambda0']*theta['psi0'][0][i])+(theta['lambda1']*theta['psi1'][0][i]))
+        posterior_probabilities.append(posterior)
+    return posterior_probabilities
+
+# Implement function to ensure that it works as intended
+my_posterior = compute_posterior(my_theta)
+print(f'My posterior probabilities are {my_posterior}')
 
 ##########################################
 
+
+
+
+
+
+
+'''
 # Set convergence criterion L_t = 1e -4 (or some other number)
 L_t = 1e-4
 # Set t = 1
@@ -104,3 +124,4 @@ def run_em():
 # Set L^(-1) = -(infinity)
 # Set L^(0) = 0
 # While L(^(t-1) - L^(t-2) > L_t, for the current iteration t, compute posteriors based on the previous best estimate of the parameters theta^(t-1) by computing 
+'''
