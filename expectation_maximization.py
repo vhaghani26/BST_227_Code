@@ -4,6 +4,7 @@
 
 import argparse
 import numpy as np
+import math
 
 # Setup
 parser = argparse.ArgumentParser(
@@ -23,8 +24,11 @@ with open(arg.file, 'r') as a_file:
         if not line.lstrip().startswith('#'):
             new_line = line.upper()
             my_seqs.append(new_line[:-1])
+
+print(f'My sequences are {my_seqs}')
             
 # Make a one-hot encoded 3D matrix X_{ijk} 
+# ['A', 'C', 'G', 'T'] corresponds to the indexing of the matrices 
 def make_matrix(seqs):
     # Determine how many input sequences we have
     num_seqs = len(seqs)
@@ -51,7 +55,7 @@ def make_matrix(seqs):
 my_matrix = make_matrix(my_seqs)
 print(my_matrix)
 
-# Initialize the parameters randomly for theta0
+# Initialize the parameters randomly for params0 (theta0)
 # Set a random seed for troubleshooting/consistency in outputs
 np.random.seed(0)
 
@@ -63,7 +67,7 @@ def initialize_lambdas():
 
 # Generate the lambdas using the previous function
 # Generate the psis that correspond to the frequencies for ['A', 'C', 'G', 'T'], where bp frequencies sum to 1 in each array
-# Store all initialized parameters in a dictionary called 'params'
+# Store all initialized parameters in a dictionary called 'params' (params = theta)
 def initialize_random_params():
     lambdas = initialize_lambdas()
     params = {'psi0': (np.random.dirichlet(np.ones(4),size=1)).tolist(),
@@ -74,54 +78,65 @@ def initialize_random_params():
     return params
 
 # Implement function to ensure that it works as intended
-my_theta = initialize_random_params()
-print(f'My initialized parameters are {my_theta}')
+my_params = initialize_random_params()
+print(f'My initialized parameters are {my_params}')
 
-def compute_posterior(theta):
+# Compute posterior for one iteration
+# If we set q(C) equal to the posterior calculation, then the KL term can become zero
+def compute_posterior(params):
     posterior_probabilities = []
     # Range corresponds to base pair identity, which translates to specific indices of psi
     for i in range(0,4):
-        posterior = (theta['lambda1']*theta['psi1'][0][i])/((theta['lambda0']*theta['psi0'][0][i])+(theta['lambda1']*theta['psi1'][0][i]))
+        posterior = (params['lambda1']*params['psi1'][0][i])/((params['lambda0']*params['psi0'][0][i])+(params['lambda1']*params['psi1'][0][i]))
         posterior_probabilities.append(posterior)
     return posterior_probabilities
 
 # Implement function to ensure that it works as intended
-my_posterior = compute_posterior(my_theta)
+my_posterior = compute_posterior(my_params)
 print(f'My posterior probabilities are {my_posterior}')
 
 ##########################################
 
-
-
-
-
-
-
-'''
-# Set convergence criterion L_t = 1e -4 (or some other number)
-L_t = 1e-4
-# Set t = 1
-t = 1
-
-
 def e_step():
-    return 1
+    # t is the number of steps
+    # Set t = 1
+    t = 1
+    # L is the ELBO
+    # Set convergence criterion L_t = 1e -4 (or some other number)
+    L_t = 1e-4
+    # Set L^(0) = 0
+    L_t_1 = 0
+    # Set L^(-1) = -(infinity)
+    L_t_2 = -math.inf
+    # While L(^(t-1) - L^(t-2) > L_t, for the current iteration t, compute posteriors based on the previous best estimate of the parameters params^(t-1) by computing q_t(C) = P(C|X, theta(t-1))
+    # Note the posterior of C depends on a specific set of parameter values theta
+    while (L_t_1 - L_t_2) > L_t:
+        for i in range(0,t):
+            # Used as placeholder
+            v = 7
+        # Break while loop for now since we don't have multiple iterations yet
+        break
+    # Return placeholder to test function
+    return v
+
+# Implement function to ensure that it works as intended
+my_e_step = e_step()
+print(my_e_step)        
     
-# Implement function
-print(e_step())
+'''
+Scratch code:
 
-
-
-
+# Number of sequences
+num_seqs = len(seqs)
+# Sequence length
+seq_length = len(seqs[0])
+my_matrix = make_matrix(seqs)
+#for i, seq in enumerate(seqs):
+#    for j in range(seq_length):
 
 def m_step():
     return 1
     
 def run_em():
     return 1
-
-
-# Set L^(-1) = -(infinity)
-# Set L^(0) = 0
-# While L(^(t-1) - L^(t-2) > L_t, for the current iteration t, compute posteriors based on the previous best estimate of the parameters theta^(t-1) by computing 
 '''
